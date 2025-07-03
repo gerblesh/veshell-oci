@@ -2,8 +2,25 @@
 FROM scratch AS ctx
 COPY build_files /
 
+FROM quay.io/fedora/fedora-bootc AS build
+
+RUN dnf5 install -y rust \
+    cargo \
+    make \
+    cmake \
+    clang \
+    ninja-build \
+    gtk3-devel \
+    libudev-devel \
+    libseat-devel \
+    libinput-devel \
+    mesa-libgbm-devel \
+    openssl-devel
+
 # Base Image
-FROM ghcr.io/ublue-os/bazzite:stable
+FROM quay.io/fedora/fedora-sway-atomic
+
+# *pray* that everything is installed
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
